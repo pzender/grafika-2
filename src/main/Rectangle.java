@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class Rectangle {
+public class Rectangle implements Mark {
 	int beginX;
 	int beginY;
 	int endX;
@@ -34,11 +34,20 @@ public class Rectangle {
 		color = Color.BLACK;
 	}
 	
-	public void draw(Graphics g){
-		g.setColor(color);
-		((Graphics2D)g).setStroke(new BasicStroke(3));
-		g.drawRect(left(), top(), width(), height());
+	Rectangle(int beginX, int beginY){
+		this.beginX = this.endX = beginX;
+		this.beginY = this.endY = beginY;
 	}
 
-	
+	@Override
+	public void draw(Graphics g) {
+		g.setColor(color);
+		((Graphics2D)g).setStroke(new BasicStroke(3));
+		g.drawRect(left(), top(), width(), height());		
+	}
+
+	@Override
+	public MarkType getType() {
+		return MarkType.RECTANGLE;
+	}	
 }

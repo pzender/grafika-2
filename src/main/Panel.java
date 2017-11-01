@@ -11,14 +11,18 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import main.Mark.MarkType;
+
 public class Panel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
 	BufferedImage bgImage;
-	Rectangle mark;
+	ArrayList<Mark> marks;
+	Mark lastMark;
 	Panel(){
 		try {
 			bgImage = ImageIO.read(new File("mango.bmp"));
@@ -26,7 +30,7 @@ public class Panel extends JPanel implements ActionListener, MouseListener, Mous
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		mark = new Rectangle();
+		marks = new ArrayList<>();
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		
@@ -36,7 +40,8 @@ public class Panel extends JPanel implements ActionListener, MouseListener, Mous
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.drawImage(bgImage, 0, 0, null);
-		mark.draw(g);
+		for (Mark m : marks)
+			m.draw(g);
 	}
 	
 	//OBS£UGA EVENTÓW DALEJ
@@ -45,8 +50,11 @@ public class Panel extends JPanel implements ActionListener, MouseListener, Mous
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		//System.out.printf("Dragged to ( %d , %d ) %n", arg0.getX(), arg0.getY());
-		mark.endX = arg0.getX();
-		mark.endY = arg0.getY();
+		if(lastMark.getType() == MarkType.RECTANGLE){
+			Rectangle mark = (Rectangle)lastMark;
+			mark.endX = arg0.getX();
+			mark.endY = arg0.getY();
+		}
 		repaint();
 	}
 
@@ -76,8 +84,8 @@ public class Panel extends JPanel implements ActionListener, MouseListener, Mous
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		mark.beginX = arg0.getX();
-		mark.beginY = arg0.getY();
+		lastMark = new Rectangle(arg0.getX(), arg0.getY());
+		marks.add(lastMark);
 		//System.out.printf("Click at ( %d , %d ) %n", arg0.getX(), arg0.getY());
 	}
 
