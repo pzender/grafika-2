@@ -4,6 +4,11 @@ import java.awt.Graphics;
 
 public interface Mark {
 	public void draw(Graphics g);
-	public MarkType getType();
-	enum MarkType {RECTANGLE, ELLIPSE, POLYGON}; 
+	public String getType();
+	public String getName();
+	public String toString();
+	
+	public static final String RECTANGLE = "rectangle";
+	public static final String ELLIPSE = "ellipse";
+	public static final String POLYGON = "polygon";
 }

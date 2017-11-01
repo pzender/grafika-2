@@ -3,7 +3,10 @@ package main;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -19,11 +22,58 @@ public class Window extends JFrame {
 	JButton load;
 	JButton choose_pic;
 	PicturePanel pict;
-	JList<String> marks;
+	JList<Mark> marks;
 	JScrollPane scrollPane;
-	String[] example = {"rectangle 1", "ellipse 1", "rectangle 2"};
- 	
+ 	public DefaultListModel<Mark> displayedMarkList;
 	Window(){
+		setGUI();
+		
+		//button listeners
+		rectangle.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pict.markingMode = Mark.RECTANGLE;
+			}
+		});
+		
+		ellipse.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pict.markingMode = Mark.ELLIPSE;
+			}
+		});
+		
+		polygon.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pict.markingMode = Mark.POLYGON;
+			}
+		});
+		
+		save.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO!
+			}
+		});
+		
+		load.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		});
+		
+		choose_pic.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		});
+
+	}
+
+	private void setGUI() {
 		Container contents = getContentPane();
 		contents.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -62,21 +112,21 @@ public class Window extends JFrame {
 		c.gridy = 0;
 		contents.add(choose_pic, c);
 		
-		pict = new PicturePanel();
+		pict = new PicturePanel(this);
 		c.weighty = 10.0;
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 5;
 		contents.add(pict, c);
 		
-		marks = new JList<String>(example);
-		for (int i = 0 ; i < marks.getModel().getSize() ; i++)
-			System.out.println(marks.getModel().getElementAt(i));
-				
+		displayedMarkList = new DefaultListModel<>();
+		marks = new JList<Mark>(displayedMarkList);
 		scrollPane = new JScrollPane(marks);
 		c.gridx = 5;
 		c.gridy = 1;
 		c.gridwidth = 1;
 		contents.add(scrollPane, c);
 	}
+	
+	
 }

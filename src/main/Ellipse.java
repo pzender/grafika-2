@@ -48,7 +48,15 @@ public class Ellipse implements Mark {
 	}
 
 	@Override
-	public MarkType getType() {
-		return MarkType.ELLIPSE;
+	public String getType() {
+		return ELLIPSE;
+	}
+
+	@Override
+	public String getName() {
+		return String.format("%s ( %d , %d )", ELLIPSE, beginX, beginY);
 	}	
+	public String toString(){
+		return this.getName();
+	}
 }

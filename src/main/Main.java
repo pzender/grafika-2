@@ -1,6 +1,5 @@
 package main;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class Main {
@@ -11,7 +10,7 @@ public class Main {
 		wind.pack();
 		wind.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		wind.setVisible(true);
-		wind.setBounds(50, 50, 640, 480);
+		wind.setBounds(50, 50, 800, 600);
 		wind.setTitle("Grafika - lab2");
 	}
 }

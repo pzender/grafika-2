@@ -14,15 +14,16 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import main.Mark.MarkType;
 
 public class PicturePanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
+	Window appWindow;
 	private static final long serialVersionUID = 1L;
 	BufferedImage bgImage;
 	public ArrayList<Mark> marks;
-	public Mark.MarkType markingMode;
+	public String markingMode;
 	Mark lastMark;
-	PicturePanel(){
+	PicturePanel(Window appWindow){
+		this.appWindow = appWindow;
 		try {
 			bgImage = ImageIO.read(new File("mango.bmp"));
 		} catch (IOException e) {
@@ -32,7 +33,7 @@ public class PicturePanel extends JPanel implements ActionListener, MouseListene
 		marks = new ArrayList<>();
 		addMouseListener(this);
 		addMouseMotionListener(this);
-		markingMode = Mark.MarkType.ELLIPSE;
+		markingMode = Mark.RECTANGLE;
 	}	
 
 	@Override
@@ -43,20 +44,23 @@ public class PicturePanel extends JPanel implements ActionListener, MouseListene
 			m.draw(g);
 	}
 	
-	//OBS£UGA EVENTÓW DALEJ
+	//OBS£UGA EVENTÓW
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		//System.out.printf("Dragged to ( %d , %d ) %n", arg0.getX(), arg0.getY());
-		if(lastMark.getType() == MarkType.RECTANGLE){
+		if(lastMark.getType() == Mark.RECTANGLE){
 			Rectangle rect = (Rectangle)lastMark;
 			rect.endX = arg0.getX();
 			rect.endY = arg0.getY();
 		}
-		if(lastMark.getType() == MarkType.ELLIPSE){
+		else if(lastMark.getType() == Mark.ELLIPSE){
 			Ellipse ell = (Ellipse)lastMark;
 			ell.endX = arg0.getX();
 			ell.endY = arg0.getY();
+		}
+		else if(lastMark.getType() == Mark.POLYGON){
+			//STUFF
 		}
 		repaint();
 	}
@@ -87,11 +91,19 @@ public class PicturePanel extends JPanel implements ActionListener, MouseListene
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		if (markingMode == Mark.MarkType.RECTANGLE)
+		if (markingMode == Mark.RECTANGLE){
 			lastMark = new Rectangle(arg0.getX(), arg0.getY());
-		else if (markingMode == Mark.MarkType.ELLIPSE)
+			marks.add(lastMark);
+			appWindow.displayedMarkList.addElement(lastMark);
+		}
+		else if (markingMode == Mark.ELLIPSE){
 			lastMark = new Ellipse(arg0.getX(), arg0.getY());
-		marks.add(lastMark);
+			marks.add(lastMark);
+			appWindow.displayedMarkList.addElement(lastMark);
+		}
+		else if (markingMode == Mark.POLYGON){
+			//STUFF
+		}
 		//System.out.printf("Click at ( %d , %d ) %n", arg0.getX(), arg0.getY());
 	}
 

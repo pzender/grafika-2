@@ -48,7 +48,16 @@ public class Rectangle implements Mark {
 	}
 
 	@Override
-	public MarkType getType() {
-		return MarkType.RECTANGLE;
+	public String getType() {
+		return RECTANGLE;
+	}
+
+	@Override
+	public String getName() {
+		return String.format("%s ( %d , %d )", RECTANGLE, beginX, beginY);
 	}	
+	
+	public String toString(){
+		return this.getName();
+	}
 }
