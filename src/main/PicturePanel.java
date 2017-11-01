@@ -1,8 +1,6 @@
 package main;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -18,13 +16,13 @@ import javax.swing.JPanel;
 
 import main.Mark.MarkType;
 
-public class Panel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
+public class PicturePanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
 	BufferedImage bgImage;
-	ArrayList<Mark> marks;
-	Mark.MarkType markingMode;
+	public ArrayList<Mark> marks;
+	public Mark.MarkType markingMode;
 	Mark lastMark;
-	Panel(){
+	PicturePanel(){
 		try {
 			bgImage = ImageIO.read(new File("mango.bmp"));
 		} catch (IOException e) {
