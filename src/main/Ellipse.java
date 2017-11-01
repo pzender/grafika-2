@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class Rectangle implements Mark {
+public class Ellipse implements Mark {
 	int beginX;
 	int beginY;
 	int endX;
@@ -29,12 +29,12 @@ public class Rectangle implements Mark {
 		return beginY > endY ? beginY-endY : endY-beginY;
 	}
 		
-	Rectangle(){
+	Ellipse(){
 		beginX = beginY = endX = endY = 0;
 		color = Color.BLACK;
 	}
 	
-	Rectangle(int beginX, int beginY){
+	Ellipse(int beginX, int beginY){
 		this.beginX = this.endX = beginX;
 		this.beginY = this.endY = beginY;
 		color = Color.BLACK;
@@ -44,11 +44,11 @@ public class Rectangle implements Mark {
 	public void draw(Graphics g) {
 		g.setColor(color);
 		((Graphics2D)g).setStroke(new BasicStroke(3));
-		g.drawRect(left(), top(), width(), height());		
+		g.drawOval(left(), top(), width(), height());		
 	}
 
 	@Override
 	public MarkType getType() {
-		return MarkType.RECTANGLE;
+		return MarkType.ELLIPSE;
 	}	
 }

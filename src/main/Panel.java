@@ -22,6 +22,7 @@ public class Panel extends JPanel implements ActionListener, MouseListener, Mous
 	private static final long serialVersionUID = 1L;
 	BufferedImage bgImage;
 	ArrayList<Mark> marks;
+	Mark.MarkType markingMode;
 	Mark lastMark;
 	Panel(){
 		try {
@@ -33,7 +34,7 @@ public class Panel extends JPanel implements ActionListener, MouseListener, Mous
 		marks = new ArrayList<>();
 		addMouseListener(this);
 		addMouseMotionListener(this);
-		
+		markingMode = Mark.MarkType.ELLIPSE;
 	}	
 
 	@Override
@@ -45,15 +46,19 @@ public class Panel extends JPanel implements ActionListener, MouseListener, Mous
 	}
 	
 	//OBS£UGA EVENTÓW DALEJ
-	
-	
+
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		//System.out.printf("Dragged to ( %d , %d ) %n", arg0.getX(), arg0.getY());
 		if(lastMark.getType() == MarkType.RECTANGLE){
-			Rectangle mark = (Rectangle)lastMark;
-			mark.endX = arg0.getX();
-			mark.endY = arg0.getY();
+			Rectangle rect = (Rectangle)lastMark;
+			rect.endX = arg0.getX();
+			rect.endY = arg0.getY();
+		}
+		if(lastMark.getType() == MarkType.ELLIPSE){
+			Ellipse ell = (Ellipse)lastMark;
+			ell.endX = arg0.getX();
+			ell.endY = arg0.getY();
 		}
 		repaint();
 	}
@@ -84,7 +89,10 @@ public class Panel extends JPanel implements ActionListener, MouseListener, Mous
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		lastMark = new Rectangle(arg0.getX(), arg0.getY());
+		if (markingMode == Mark.MarkType.RECTANGLE)
+			lastMark = new Rectangle(arg0.getX(), arg0.getY());
+		else if (markingMode == Mark.MarkType.ELLIPSE)
+			lastMark = new Ellipse(arg0.getX(), arg0.getY());
 		marks.add(lastMark);
 		//System.out.printf("Click at ( %d , %d ) %n", arg0.getX(), arg0.getY());
 	}
@@ -100,5 +108,4 @@ public class Panel extends JPanel implements ActionListener, MouseListener, Mous
 		// TODO Auto-generated method stub
 		
 	}
-	
 }
