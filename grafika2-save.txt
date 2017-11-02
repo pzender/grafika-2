@@ -1,4 +1,2 @@
-rectangle 113 105 279 264
-rectangle 156 70 346 173
-ellipse 63 49 334 333
-polygon 112 42 213 25 91 74 
+rectangle 338 204 218 330
+rectangle 100 284 290 363

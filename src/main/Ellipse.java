@@ -10,6 +10,7 @@ public class Ellipse implements Mark {
 	int beginY;
 	int endX;
 	int endY;
+	boolean isFinished;
 	
 	Color color;
 	
@@ -38,6 +39,7 @@ public class Ellipse implements Mark {
 		this.beginX = this.endX = beginX;
 		this.beginY = this.endY = beginY;
 		color = Color.BLACK;
+		isFinished = false;
 	}
 
 	@Override
@@ -63,7 +65,7 @@ public class Ellipse implements Mark {
 	@Override
 	public boolean isFinished() {
 		// TODO Auto-generated method stub
-		return true;
+		return isFinished;
 	}
 
 	@Override

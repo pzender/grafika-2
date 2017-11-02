@@ -48,7 +48,8 @@ public class Window extends JFrame {
 					for(Mark m : pict.marks) {
 						m.setColor(Color.BLACK);
 					}
-					pict.marks.get(selectedMarkIndex).setColor(Color.RED);
+					if(pict.marks.size() > selectedMarkIndex)
+						 pict.marks.get(selectedMarkIndex).setColor(Color.RED);
 					repaint();
 				}
 			}
@@ -151,7 +152,14 @@ public class Window extends JFrame {
 		choose_pic.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				System.out.print("data:  ");
+				for(Mark m : pict.marks)
+					System.out.print(m + " ");
+				System.out.println("");
+				System.out.print("displ: ");
+				for(int i = 0 ; i < displayedMarkList.size() ; i++)
+					System.out.print(displayedMarkList.get(i) + " ");
+				System.out.println("\n\n");
 			}
 		});
 		
@@ -160,11 +168,12 @@ public class Window extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stubs
-				System.out.println("selected row " + selectedMarkIndex);
 				displayedMarkList.remove(selectedMarkIndex);
 				pict.marks.remove(selectedMarkIndex);
 				marks.clearSelection();
-				selectedMarkIndex = 0;
+				pict.lastMark = null;
+				//selectedMarkIndex = 0;
+				pict.repaint();
 			}
 			
 		});
@@ -205,7 +214,7 @@ public class Window extends JFrame {
 		c.gridy = 0;
 		contents.add(load, c);
 
-		choose_pic = new JButton("Picture");
+		choose_pic = new JButton("");
 		c.gridx = 5;
 		c.gridy = 0;
 		contents.add(choose_pic, c);

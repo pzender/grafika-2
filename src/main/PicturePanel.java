@@ -21,11 +21,11 @@ public class PicturePanel extends JPanel implements ActionListener, MouseListene
 	BufferedImage bgImage;
 	public ArrayList<Mark> marks;
 	public String markingMode;
-	Mark lastMark;
+	public Mark lastMark;
 	PicturePanel(Window appWindow){
 		this.appWindow = appWindow;
 		try {
-			bgImage = ImageIO.read(new File("mango.bmp"));
+			bgImage = ImageIO.read(new File("img1.bmp"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -40,6 +40,8 @@ public class PicturePanel extends JPanel implements ActionListener, MouseListene
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.drawImage(bgImage, 0, 0, null);
+		if (lastMark != null)
+			lastMark.draw(g);
 		for (Mark m : marks)
 			m.draw(g);
 	}
@@ -100,7 +102,6 @@ public class PicturePanel extends JPanel implements ActionListener, MouseListene
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -108,25 +109,28 @@ public class PicturePanel extends JPanel implements ActionListener, MouseListene
 	public void mousePressed(MouseEvent arg0) {
 		if (markingMode == Mark.RECTANGLE){
 			lastMark = new Rectangle(arg0.getX(), arg0.getY());
-			//marks.add(lastMark);
-			appWindow.displayedMarkList.addElement(lastMark);
-			marks.add(lastMark);
-
 		}
 		else if (markingMode == Mark.ELLIPSE){
 			lastMark = new Ellipse(arg0.getX(), arg0.getY());
-			//marks.add(lastMark);
-			appWindow.displayedMarkList.addElement(lastMark);
-			marks.add(lastMark);
-
 		}
 		//System.out.printf("Click at ( %d , %d ) %n", arg0.getX(), arg0.getY());
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		if (markingMode == Mark.RECTANGLE){
+			((Rectangle)lastMark).isFinished = true;
+			appWindow.displayedMarkList.addElement(lastMark);
+			marks.add(lastMark);
+//			lastMark
+
+		}
+		else if (markingMode == Mark.ELLIPSE){
+			//marks.add(lastMark);
+			((Ellipse)lastMark).isFinished = true;
+			appWindow.displayedMarkList.addElement(lastMark);
+			marks.add(lastMark);	
+		}
 	}
 
 	@Override

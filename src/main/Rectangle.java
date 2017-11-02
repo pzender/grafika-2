@@ -10,6 +10,7 @@ public class Rectangle implements Mark {
 	int beginY;
 	int endX;
 	int endY;
+	boolean isFinished;
 	
 	Color color;
 	
@@ -35,6 +36,7 @@ public class Rectangle implements Mark {
 	}
 	
 	Rectangle(int beginX, int beginY){
+		isFinished = false;
 		this.beginX = this.endX = beginX;
 		this.beginY = this.endY = beginY;
 		color = Color.BLACK;
@@ -64,7 +66,7 @@ public class Rectangle implements Mark {
 	@Override
 	public boolean isFinished() {
 		// TODO Auto-generated method stub
-		return true;
+		return isFinished;
 	}
 
 	@Override
