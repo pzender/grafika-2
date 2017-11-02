@@ -85,7 +85,6 @@ public class Window extends JFrame {
 				try {
 					PrintWriter pw = new PrintWriter(saveTo);
 					for (Mark m : pict.marks) {
-						System.out.println(m.saveAs());
 						pw.write(m.saveAs() + "\n");
 					}
 					pw.close();
