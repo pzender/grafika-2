@@ -7,6 +7,7 @@ public interface Mark {
 	public String getType();
 	public String getName();
 	public String toString();
+	public boolean isFinished();
 	
 	public static final String RECTANGLE = "rectangle";
 	public static final String ELLIPSE = "ellipse";

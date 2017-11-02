@@ -60,4 +60,10 @@ public class Rectangle implements Mark {
 	public String toString(){
 		return this.getName();
 	}
+
+	@Override
+	public boolean isFinished() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

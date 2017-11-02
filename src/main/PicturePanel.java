@@ -53,11 +53,13 @@ public class PicturePanel extends JPanel implements ActionListener, MouseListene
 			Rectangle rect = (Rectangle)lastMark;
 			rect.endX = arg0.getX();
 			rect.endY = arg0.getY();
+			marks.add(lastMark);
 		}
 		else if(lastMark.getType() == Mark.ELLIPSE){
 			Ellipse ell = (Ellipse)lastMark;
 			ell.endX = arg0.getX();
 			ell.endY = arg0.getY();
+			marks.add(lastMark);
 		}
 		else if(lastMark.getType() == Mark.POLYGON){
 			//STUFF
@@ -67,14 +69,29 @@ public class PicturePanel extends JPanel implements ActionListener, MouseListene
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if (markingMode == Mark.POLYGON) {
+			if(lastMark == null || lastMark.getType() != Mark.POLYGON || lastMark.isFinished()) {
+				lastMark = new Polygon(arg0.getX(), arg0.getY());
+				marks.add(lastMark);
+			}
+			else if (!lastMark.isFinished() && arg0.getButton() == MouseEvent.BUTTON1){
+				Polygon currentPolygon = (Polygon)lastMark;
+				currentPolygon.addVertex(arg0.getX(), arg0.getY());
+			}
+			else /*if (arg0.getButton() == MouseEvent.BUTTON2) */ {
+				Polygon currentPolygon = (Polygon)lastMark;
+				currentPolygon.isFinished = true;
+				appWindow.displayedMarkList.addElement(currentPolygon);
+			}
+		}
+		repaint();
 	}
 
 	@Override
@@ -93,16 +110,13 @@ public class PicturePanel extends JPanel implements ActionListener, MouseListene
 	public void mousePressed(MouseEvent arg0) {
 		if (markingMode == Mark.RECTANGLE){
 			lastMark = new Rectangle(arg0.getX(), arg0.getY());
-			marks.add(lastMark);
+			//marks.add(lastMark);
 			appWindow.displayedMarkList.addElement(lastMark);
 		}
 		else if (markingMode == Mark.ELLIPSE){
 			lastMark = new Ellipse(arg0.getX(), arg0.getY());
-			marks.add(lastMark);
+			//marks.add(lastMark);
 			appWindow.displayedMarkList.addElement(lastMark);
-		}
-		else if (markingMode == Mark.POLYGON){
-			//STUFF
 		}
 		//System.out.printf("Click at ( %d , %d ) %n", arg0.getX(), arg0.getY());
 	}
