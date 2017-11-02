@@ -70,4 +70,10 @@ public class Ellipse implements Mark {
 	public String saveAs() {
 		return String.format("%s %d %d %d %d", getType(), beginX, beginY, endX, endY);
 	}
+
+	@Override
+	public void setColor(Color c) {
+		// TODO Auto-generated method stub
+		this.color = c;
+	}
 }

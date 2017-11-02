@@ -1,20 +1,24 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class Polygon implements Mark {
 	ArrayList<Point> vertices;
 	boolean isFinished;
+	private Color color;
 	Polygon(int initX, int initY){
 		isFinished = false;
 		vertices = new ArrayList<>();
 		vertices.add(new Point(initX, initY));
+		color = Color.BLACK;
 	}
 	
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
+		g.setColor(color);
 		Point lastPoint = vertices.get(0);
 		for (Point p : vertices) {
 			g.drawLine(lastPoint.x, lastPoint.y, p.x, p.y);
@@ -64,6 +68,13 @@ public class Polygon implements Mark {
 			save += String.format("%d %d ", p.x, p.y);
 		}
 		return save;
+	}
+
+	@Override
+	public void setColor(Color c) {
+		// TODO Auto-generated method stub
+		this.color = c;
+
 	}
 
 }

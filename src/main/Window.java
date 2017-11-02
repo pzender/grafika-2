@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,6 +16,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class Window extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -25,12 +29,31 @@ public class Window extends JFrame {
 	JButton save;
 	JButton load;
 	JButton choose_pic;
+	JButton delete;
 	PicturePanel pict;
 	JList<Mark> marks;
 	JScrollPane scrollPane;
  	public DefaultListModel<Mark> displayedMarkList;
+ 	int selectedMarkIndex;
 	Window(){
 		setGUI();
+		marks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		marks.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				if(!arg0.getValueIsAdjusting()) {
+					selectedMarkIndex = marks.getSelectionModel().getLeadSelectionIndex();
+					for(Mark m : pict.marks) {
+						m.setColor(Color.BLACK);
+					}
+					pict.marks.get(selectedMarkIndex).setColor(Color.RED);
+					repaint();
+				}
+			}
+			
+		});
 		
 		//button listeners
 		rectangle.addActionListener(new ActionListener(){
@@ -131,6 +154,20 @@ public class Window extends JFrame {
 				//TODO
 			}
 		});
+		
+		delete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stubs
+				System.out.println("selected row " + selectedMarkIndex);
+				displayedMarkList.remove(selectedMarkIndex);
+				pict.marks.remove(selectedMarkIndex);
+				marks.clearSelection();
+				selectedMarkIndex = 0;
+			}
+			
+		});
 
 	}
 
@@ -178,6 +215,7 @@ public class Window extends JFrame {
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 5;
+		c.gridheight = 2;
 		contents.add(pict, c);
 		
 		displayedMarkList = new DefaultListModel<>();
@@ -186,7 +224,14 @@ public class Window extends JFrame {
 		c.gridx = 5;
 		c.gridy = 1;
 		c.gridwidth = 1;
+		c.gridheight = 1;
 		contents.add(scrollPane, c);
+		
+		delete = new JButton("Delete");
+		c.gridx = 5;
+		c.gridy = 2;
+		c.weighty = 0.1;
+		contents.add(delete, c);
 	}
 	
 	

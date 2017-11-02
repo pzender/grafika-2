@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public interface Mark {
@@ -9,6 +10,7 @@ public interface Mark {
 	public String toString();
 	public String saveAs();
 	public boolean isFinished();
+	public void setColor(Color c);
 	
 	public static final String RECTANGLE = "rectangle";
 	public static final String ELLIPSE = "ellipse";
