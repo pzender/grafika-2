@@ -53,13 +53,11 @@ public class PicturePanel extends JPanel implements ActionListener, MouseListene
 			Rectangle rect = (Rectangle)lastMark;
 			rect.endX = arg0.getX();
 			rect.endY = arg0.getY();
-			marks.add(lastMark);
 		}
 		else if(lastMark.getType() == Mark.ELLIPSE){
 			Ellipse ell = (Ellipse)lastMark;
 			ell.endX = arg0.getX();
 			ell.endY = arg0.getY();
-			marks.add(lastMark);
 		}
 		else if(lastMark.getType() == Mark.POLYGON){
 			//STUFF
@@ -112,11 +110,15 @@ public class PicturePanel extends JPanel implements ActionListener, MouseListene
 			lastMark = new Rectangle(arg0.getX(), arg0.getY());
 			//marks.add(lastMark);
 			appWindow.displayedMarkList.addElement(lastMark);
+			marks.add(lastMark);
+
 		}
 		else if (markingMode == Mark.ELLIPSE){
 			lastMark = new Ellipse(arg0.getX(), arg0.getY());
 			//marks.add(lastMark);
 			appWindow.displayedMarkList.addElement(lastMark);
+			marks.add(lastMark);
+
 		}
 		//System.out.printf("Click at ( %d , %d ) %n", arg0.getX(), arg0.getY());
 	}

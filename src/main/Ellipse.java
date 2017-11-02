@@ -65,4 +65,9 @@ public class Ellipse implements Mark {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	@Override
+	public String saveAs() {
+		return String.format("%s %d %d %d %d", getType(), beginX, beginY, endX, endY);
+	}
 }

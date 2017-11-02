@@ -57,4 +57,13 @@ public class Polygon implements Mark {
 		return this.isFinished;
 	}
 
+	@Override
+	public String saveAs() {
+		String save = getType() + " ";
+		for (Point p : vertices) {
+			save += String.format("%d %d ", p.x, p.y);
+		}
+		return save;
+	}
+
 }

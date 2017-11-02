@@ -7,6 +7,7 @@ public interface Mark {
 	public String getType();
 	public String getName();
 	public String toString();
+	public String saveAs();
 	public boolean isFinished();
 	
 	public static final String RECTANGLE = "rectangle";
